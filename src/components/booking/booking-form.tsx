@@ -7,6 +7,7 @@ import { z } from 'zod';
 import { format } from 'date-fns';
 import { pt } from 'date-fns/locale';
 import { CalendarIcon, Loader2 } from 'lucide-react';
+import { useRouter } from 'next/navigation';
 
 import { createBooking, getBookedSlots } from '@/lib/actions';
 import { services, timeSlots } from '@/lib/data';
@@ -50,6 +51,7 @@ const formSchema = z.object({
 
 export function BookingForm() {
   const { toast } = useToast();
+  const router = useRouter();
   const [initialState, formAction, isPending] = useActionState(createBooking, { type: 'initial' });
   const [bookedSlots, setBookedSlots] = useState<string[]>([]);
   const [isFetchingSlots, setIsFetchingSlots] = useState(false);
@@ -77,6 +79,7 @@ export function BookingForm() {
         description: initialState.message,
       });
       form.reset();
+      router.push('/');
     } else if (initialState.type === 'error') {
       toast({
         title: 'Erro!',
@@ -84,7 +87,7 @@ export function BookingForm() {
         variant: 'destructive',
       });
     }
-  }, [initialState, toast, form]);
+  }, [initialState, toast, form, router]);
   
   useEffect(() => {
     if (selectedDate) {
