@@ -1,8 +1,8 @@
 'use client';
 
-import { Menu } from 'lucide-react';
+import { LogOut, Menu } from 'lucide-react';
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import { useState } from 'react';
 
 import { Button } from '@/components/ui/button';
@@ -15,6 +15,7 @@ import {
 } from '@/components/ui/sheet';
 import { cn } from '@/lib/utils';
 import { Logo } from './logo';
+import { useAuth, useUser } from '@/firebase';
 
 const navLinks = [
   { href: '/', label: 'Início' },
@@ -24,7 +25,18 @@ const navLinks = [
 
 export default function Header() {
   const pathname = usePathname();
+  const router = useRouter();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const { user } = useUser();
+  const auth = useAuth();
+
+  const handleLogout = async () => {
+    if (auth) {
+      await auth.signOut();
+      router.push('/login');
+    }
+  };
+
 
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
@@ -78,14 +90,27 @@ export default function Header() {
                     {label}
                   </Link>
                 ))}
+                {user && (
+                    <Button variant="ghost" onClick={handleLogout} className="justify-start text-lg text-foreground/60">
+                      <LogOut className="mr-2 h-5 w-5" />
+                      Sair
+                    </Button>
+                  )}
               </nav>
             </SheetContent>
           </Sheet>
         </div>
-        <div className="hidden flex-1 justify-end md:flex">
-          <Button asChild>
-            <Link href="/agendar">Agende seu Horário</Link>
-          </Button>
+        <div className="hidden flex-1 items-center justify-end gap-4 md:flex">
+          {user ? (
+            <Button variant="ghost" onClick={handleLogout} size="sm">
+              <LogOut className="mr-2 h-4 w-4" />
+              Sair
+            </Button>
+          ) : (
+            <Button asChild>
+              <Link href="/agendar">Agende seu Horário</Link>
+            </Button>
+          )}
         </div>
       </div>
     </header>
