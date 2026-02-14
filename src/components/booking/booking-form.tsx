@@ -1,7 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
-import { useFormState } from 'react-dom';
+import { useEffect, useState, useActionState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
@@ -51,7 +50,7 @@ const formSchema = z.object({
 
 export function BookingForm() {
   const { toast } = useToast();
-  const [initialState, formAction] = useFormState(createBooking, { type: 'initial' });
+  const [initialState, formAction] = useActionState(createBooking, { type: 'initial' });
   const [pending, setPending] = useState(false);
   const [bookedSlots, setBookedSlots] = useState<string[]>([]);
   const [isFetchingSlots, setIsFetchingSlots] = useState(false);
