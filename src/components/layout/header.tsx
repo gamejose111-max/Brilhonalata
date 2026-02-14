@@ -3,7 +3,6 @@
 import { Menu } from 'lucide-react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import Image from 'next/image';
 
 import { Button } from '@/components/ui/button';
 import {
@@ -23,6 +22,28 @@ const navLinks = [
   { href: '/admin', label: 'Admin' },
 ];
 
+const Logo = () => (
+  <svg
+    width="150"
+    height="40"
+    viewBox="0 0 150 40"
+    fill="currentColor"
+    xmlns="http://www.w3.org/2000/svg"
+    aria-label="Brilho da Lata"
+  >
+    <text
+      x="50%"
+      y="50%"
+      dominantBaseline="middle"
+      textAnchor="middle"
+      className="font-bold"
+      style={{ fontSize: '18px' }}
+    >
+      Brilho da Lata
+    </text>
+  </svg>
+);
+
 export default function Header() {
   const pathname = usePathname();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -30,14 +51,8 @@ export default function Header() {
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="container flex h-16 items-center">
-        <Link href="/" className="mr-8 flex items-center">
-          <Image
-            src="/logo.png"
-            alt="Brilho da Lata"
-            width={150}
-            height={40}
-            priority
-          />
+        <Link href="/" className="mr-8 flex items-center text-primary">
+          <Logo />
         </Link>
         <nav className="hidden items-center gap-6 text-sm font-medium md:flex">
           {navLinks.map(({ href, label }) => (
@@ -66,13 +81,8 @@ export default function Header() {
               <SheetDescription className="sr-only">
                 Navegação principal do site
               </SheetDescription>
-              <Link href="/" className="mb-8 flex items-center">
-                <Image
-                  src="/logo.png"
-                  alt="Brilho da Lata"
-                  width={150}
-                  height={40}
-                />
+              <Link href="/" className="mb-8 flex items-center text-primary">
+                <Logo />
               </Link>
               <nav className="flex flex-col gap-6 text-lg font-medium">
                 {navLinks.map(({ href, label }) => (
