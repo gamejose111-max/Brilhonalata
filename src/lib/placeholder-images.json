@@ -2,8 +2,8 @@
   "placeholderImages": [
     {
       "id": "hero-car",
-      "description": "Hand polishing a black car to a high shine.",
-      "imageUrl": "https://images.unsplash.com/photo-1549399542-7e69c8195441?q=80&w=2070",
+      "description": "A close-up of a person polishing a shiny black car.",
+      "imageUrl": "https://images.unsplash.com/photo-1628503073158-ec0c881af0e2?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw4fHxjYXIlMjBwb2xpc2hpbmd8ZW58MHx8fHwxNzcxMDMxNzYwfDA&ixlib=rb-4.1.0&q=80&w=1080",
       "imageHint": "car polishing"
     }
   ]
