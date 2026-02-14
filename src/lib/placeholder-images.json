@@ -2,8 +2,8 @@
   "placeholderImages": [
     {
       "id": "hero-car",
-      "description": "A shiny blue car after being polished.",
-      "imageUrl": "https://images.unsplash.com/photo-1648709263135-a193121a82f7?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwyfHxwb2xpc2hlZCUyMGNhcnxlbnwwfHx8fDE3NzEwMjcxMjR8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "description": "A shiny red sports car after being polished.",
+      "imageUrl": "https://images.unsplash.com/photo-1583121274602-3e2820c69888?q=80&w=2070",
       "imageHint": "polished car"
     }
   ]
