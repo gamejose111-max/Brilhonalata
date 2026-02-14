@@ -102,7 +102,7 @@ export async function createBooking(prevState: any, formData: FormData) {
     console.log('Cliente:', newBooking.name);
     console.log('Email:', newBooking.email);
     console.log('Serviço:', newBooking.serviceId);
-    console.log('Data:', new Date(newBooking.date).toLocaleDateString('pt-BR'));
+    console.log('Data:', new Date(newBooking.date).toLocaleDateString('pt-PT'));
     console.log('Horário:', newBooking.time);
     console.log('------------------------------------');
 
@@ -143,7 +143,7 @@ export async function updateAppointmentStatus(formData: FormData) {
     const updatedBooking = bookings.find(b => b.id === id);
     if(updatedBooking) {
         console.log(`--- Status do Agendamento Atualizado para ${updatedBooking.email} ---`);
-        console.log(`Seu agendamento para ${new Date(updatedBooking.date).toLocaleDateString('pt-BR')} às ${updatedBooking.time} foi ${status === 'confirmed' ? 'CONFIRMADO' : 'RECUSADO'}.`);
+        console.log(`Seu agendamento para ${new Date(updatedBooking.date).toLocaleDateString('pt-PT')} às ${updatedBooking.time} foi ${status === 'confirmed' ? 'CONFIRMADO' : 'RECUSADO'}.`);
         console.log('------------------------------------');
     }
     

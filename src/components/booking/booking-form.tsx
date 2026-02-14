@@ -1,11 +1,11 @@
 'use client';
 
 import { useEffect, useState, useActionState } from 'react';
-import { useForm } from 'react-hook-form';
+import { useForm, Controller } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { format } from 'date-fns';
-import { ptBR } from 'date-fns/locale';
+import { pt } from 'date-fns/locale';
 import { CalendarIcon, Loader2 } from 'lucide-react';
 
 import { createBooking, getBookedSlots } from '@/lib/actions';
@@ -155,7 +155,7 @@ export function BookingForm() {
                 </FormItem>
             )}
             />
-        <FormField
+        <Controller
           control={form.control}
           name="serviceId"
           render={({ field }) => (
@@ -196,7 +196,7 @@ export function BookingForm() {
                       )}
                     >
                       {field.value ? (
-                        format(field.value, 'PPP', { locale: ptBR })
+                        format(field.value, 'PPP', { locale: pt })
                       ) : (
                         <span>Escolha uma data</span>
                       )}
@@ -219,7 +219,7 @@ export function BookingForm() {
           )}
         />
         {selectedDate && (
-           <FormField
+           <Controller
            control={form.control}
            name="time"
            render={({ field }) => (

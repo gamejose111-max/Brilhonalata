@@ -10,7 +10,7 @@ export default function Footer() {
           <Logo />
         </div>
         <p className="text-center text-sm text-muted-foreground">
-          © {new Date().getFullYear()} Brilho na Lata. Todos os direitos reservados.
+          © {new Date().getFullYear()} Brilho na Lata, Cascais. Todos os direitos reservados.
         </p>
       </div>
     </footer>

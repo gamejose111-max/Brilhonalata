@@ -8,9 +8,9 @@ export const services: Service[] = [
     description: 'Remove marcas de redemoinho leves e realça o brilho da pintura. Ideal para carros com poucos sinais de desgaste.',
     Icon: Car,
     prices: [
-      { vehicleType: 'Carro Pequeno', price: 'R$ 300' },
-      { vehicleType: 'Carro Médio/SUV', price: 'R$ 400' },
-      { vehicleType: 'Carro Grande/Caminhonete', price: 'R$ 500' },
+      { vehicleType: 'Carro Pequeno', price: '€ 300' },
+      { vehicleType: 'Carro Médio/SUV', price: '€ 400' },
+      { vehicleType: 'Carro Grande/Caminhonete', price: '€ 500' },
     ],
   },
   {
@@ -19,9 +19,9 @@ export const services: Service[] = [
     description: 'Correção aprofundada de imperfeições, remove arranhões médios e restaura o brilho profundo e original da pintura.',
     Icon: Wrench,
     prices: [
-      { vehicleType: 'Carro Pequeno', price: 'R$ 600' },
-      { vehicleType: 'Carro Médio/SUV', price: 'R$ 750' },
-      { vehicleType: 'Carro Grande/Caminhonete', price: 'R$ 900' },
+      { vehicleType: 'Carro Pequeno', price: '€ 600' },
+      { vehicleType: 'Carro Médio/SUV', price: '€ 750' },
+      { vehicleType: 'Carro Grande/Caminhonete', price: '€ 900' },
     ],
   },
   {
@@ -30,9 +30,9 @@ export const services: Service[] = [
     description: 'Aplicação de um revestimento cerâmico para proteção superior, brilho intenso e durabilidade de até 3 anos.',
     Icon: ShieldCheck,
     prices: [
-      { vehicleType: 'Carro Pequeno', price: 'R$ 1200' },
-      { vehicleType: 'Carro Médio/SUV', price: 'R$ 1500' },
-      { vehicleType: 'Carro Grande/Caminhonete', price: 'R$ 1800' },
+      { vehicleType: 'Carro Pequeno', price: '€ 1200' },
+      { vehicleType: 'Carro Médio/SUV', price: '€ 1500' },
+      { vehicleType: 'Carro Grande/Caminhonete', price: '€ 1800' },
     ],
   },
   {
@@ -41,9 +41,9 @@ export const services: Service[] = [
     description: 'Correção de danos localizados, como arranhões, lascas e pequenos amassados, restaurando a aparência original da peça.',
     Icon: SprayCan,
     prices: [
-      { vehicleType: 'Por Peça', price: 'A partir de R$ 350' },
-      { vehicleType: 'Para-choque', price: 'A partir de R$ 400' },
-      { vehicleType: 'Teto ou Capô', price: 'A partir de R$ 500' },
+      { vehicleType: 'Por Peça', price: 'A partir de € 350' },
+      { vehicleType: 'Para-choque', price: 'A partir de € 400' },
+      { vehicleType: 'Teto ou Capô', price: 'A partir de € 500' },
     ],
   },
   {

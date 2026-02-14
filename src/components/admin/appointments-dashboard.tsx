@@ -11,7 +11,7 @@ import { Button } from '@/components/ui/button';
 import type { Booking } from '@/lib/types';
 import { services } from '@/lib/data';
 import { format } from 'date-fns';
-import { ptBR } from 'date-fns/locale';
+import { pt } from 'date-fns/locale';
 import { Check, X } from 'lucide-react';
 import { updateAppointmentStatus } from '@/lib/actions';
 import {
@@ -115,7 +115,7 @@ export default function AppointmentsDashboard({
                   </TableCell>
                   <TableCell>
                     {format(new Date(appointment.date), 'dd/MM/yyyy', {
-                      locale: ptBR,
+                      locale: pt,
                     })}{' '}
                     às {appointment.time}
                   </TableCell>

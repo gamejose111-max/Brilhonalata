@@ -40,7 +40,7 @@ const ServiceRecommendationOutputSchema = z.object({
   estimatedPriceRange: z
     .string()
     .describe(
-      'An estimated price range for the recommended service package, in Brazilian Reais (R$, e.g., "R$ 300 - R$ 500").'
+      'An estimated price range for the recommended service package, in Euros (€, e.g., "€300 - €500").'
     ),
   reasoning: z
     .string()
@@ -72,7 +72,7 @@ const serviceRecommendationPrompt = ai.definePrompt({
 - Reparo de Pintura Localizado: Fixes small dents, scratches, and chips.
 - Pintura Completa: Full car repaint.
 
-Based on the following information, recommend ONE service package from 'Brilho na Lata'. Also, provide an estimated price range in Brazilian Reais (R$). Invent a plausible price range if specific prices are not provided to you.
+Based on the following information, recommend ONE service package from 'Brilho na Lata'. Also, provide an estimated price range in Euros (€). Invent a plausible price range if specific prices are not provided to you.
 
 Current Vehicle Condition: {{{currentCondition}}}
 Desired Outcome: {{{desiredOutcome}}}`,
