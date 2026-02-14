@@ -7,7 +7,7 @@ const Logo = () => (
         viewBox="0 0 150 40"
         fill="currentColor"
         xmlns="http://www.w3.org/2000/svg"
-        aria-label="Brilho da Lata"
+        aria-label="Brilho na Lata"
     >
         <text
             x="50%"
@@ -17,7 +17,7 @@ const Logo = () => (
             className="font-bold"
             style={{ fontSize: '18px' }}
         >
-            Brilho da Lata
+            Brilho na Lata
         </text>
     </svg>
 );
@@ -31,7 +31,7 @@ export default function Footer() {
           <Logo />
         </div>
         <p className="text-center text-sm text-muted-foreground">
-          © {new Date().getFullYear()} Brilho da Lata. Todos os direitos reservados.
+          © {new Date().getFullYear()} Brilho na Lata. Todos os direitos reservados.
         </p>
       </div>
     </footer>

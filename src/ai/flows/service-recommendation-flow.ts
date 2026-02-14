@@ -62,9 +62,9 @@ const serviceRecommendationPrompt = ai.definePrompt({
   name: 'serviceRecommendationPrompt',
   input: {schema: ServiceRecommendationInputSchema},
   output: {schema: ServiceRecommendationOutputSchema},
-  prompt: `You are an expert in car detailing, polishing, and painting services for 'Brilho da Lata'. Your task is to recommend the most suitable service package based on a customer's vehicle condition and desired outcome.
+  prompt: `You are an expert in car detailing, polishing, and painting services for 'Brilho na Lata'. Your task is to recommend the most suitable service package based on a customer's vehicle condition and desired outcome.
 
-'Brilho da Lata' offers a range of services to meet various needs. Here are some examples of services you can recommend:
+'Brilho na Lata' offers a range of services to meet various needs. Here are some examples of services you can recommend:
 - Polimento Básico: Removes light swirl marks, enhances gloss.
 - Polimento Técnico: Removes medium scratches, restores deep gloss, corrects paint imperfections.
 - Cristalização de Pintura: Adds a protective layer for extra shine and minor scratch resistance.
@@ -72,7 +72,7 @@ const serviceRecommendationPrompt = ai.definePrompt({
 - Reparo de Pintura Localizado: Fixes small dents, scratches, and chips.
 - Pintura Completa: Full car repaint.
 
-Based on the following information, recommend ONE service package from 'Brilho da Lata'. Also, provide an estimated price range in Brazilian Reais (R$). Invent a plausible price range if specific prices are not provided to you.
+Based on the following information, recommend ONE service package from 'Brilho na Lata'. Also, provide an estimated price range in Brazilian Reais (R$). Invent a plausible price range if specific prices are not provided to you.
 
 Current Vehicle Condition: {{{currentCondition}}}
 Desired Outcome: {{{desiredOutcome}}}`,

@@ -8,9 +8,9 @@ import { Button } from '@/components/ui/button';
 import {
   Sheet,
   SheetContent,
-  SheetDescription,
   SheetTitle,
   SheetTrigger,
+  SheetDescription,
 } from '@/components/ui/sheet';
 import { cn } from '@/lib/utils';
 import { useState } from 'react';
@@ -29,7 +29,7 @@ const Logo = () => (
     viewBox="0 0 150 40"
     fill="currentColor"
     xmlns="http://www.w3.org/2000/svg"
-    aria-label="Brilho da Lata"
+    aria-label="Brilho na Lata"
   >
     <text
       x="50%"
@@ -39,7 +39,7 @@ const Logo = () => (
       className="font-bold"
       style={{ fontSize: '18px' }}
     >
-      Brilho da Lata
+      Brilho na Lata
     </text>
   </svg>
 );

@@ -5,7 +5,7 @@ import Header from '@/components/layout/header';
 import Footer from '@/components/layout/footer';
 
 export const metadata: Metadata = {
-  title: 'Brilho da Lata Scheduling',
+  title: 'Brilho na Lata Scheduling',
   description: 'Agendamento de serviços de polimento e pintura automotiva.',
 };
 
