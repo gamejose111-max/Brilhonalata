@@ -4,7 +4,14 @@ import { PlaceHolderImages } from '@/lib/placeholder-images';
 import Image from 'next/image';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
-import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog';
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from '@/components/ui/dialog';
 import ServicesSection from './services-section';
 
 export default function HeroSection() {
@@ -42,7 +49,13 @@ export default function HeroSection() {
                 </Button>
               </DialogTrigger>
               <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto">
-                <ServicesSection />
+                <DialogHeader>
+                  <DialogTitle className="text-3xl font-bold tracking-tight sm:text-4xl text-center">Nossos Serviços</DialogTitle>
+                  <DialogDescription className="text-lg text-muted-foreground text-center !mt-4">
+                    Oferecemos uma gama completa de serviços para cuidar da estética do seu veículo com a máxima qualidade.
+                  </DialogDescription>
+                </DialogHeader>
+                <ServicesSection showHeader={false} />
               </DialogContent>
             </Dialog>
           </div>

@@ -15,17 +15,19 @@ import {
   TableRow,
 } from '@/components/ui/table';
 
-export default function ServicesSection() {
+export default function ServicesSection({ showHeader = true }: { showHeader?: boolean }) {
   return (
-    <section id="servicos">
-      <div className="mx-auto mb-12 max-w-3xl text-center">
-        <h2 className="text-3xl font-bold tracking-tight sm:text-4xl">
-          Nossos Serviços
-        </h2>
-        <p className="mt-4 text-lg text-muted-foreground">
-          Oferecemos uma gama completa de serviços para cuidar da estética do seu veículo com a máxima qualidade.
-        </p>
-      </div>
+    <section id="servicos" className={!showHeader ? 'pt-6' : ''}>
+      {showHeader && (
+        <div className="mx-auto mb-12 max-w-3xl text-center">
+          <h2 className="text-3xl font-bold tracking-tight sm:text-4xl">
+            Nossos Serviços
+          </h2>
+          <p className="mt-4 text-lg text-muted-foreground">
+            Oferecemos uma gama completa de serviços para cuidar da estética do seu veículo com a máxima qualidade.
+          </p>
+        </div>
+      )}
       <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
         {services.map((service) => (
           <Card key={service.id} className="flex flex-col">
