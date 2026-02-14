@@ -37,7 +37,7 @@ export function LoginForm() {
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
         defaultValues: {
-        email: 'brilhonalata@gmail.com',
+        email: '',
         password: '',
         },
     });
@@ -92,7 +92,7 @@ export function LoginForm() {
                 <FormItem>
                 <FormLabel>Email</FormLabel>
                 <FormControl>
-                    <Input placeholder="brilhonalata@gmail.com" {...field} type="email" />
+                    <Input placeholder="seu@email.com" {...field} type="email" />
                 </FormControl>
                 <FormMessage />
                 </FormItem>
