@@ -1,5 +1,5 @@
 import type { Service } from './types';
-import { Car, Paintbrush, Wrench } from 'lucide-react';
+import { Car, Paintbrush, Wrench, ShieldCheck, SprayCan } from 'lucide-react';
 
 export const services: Service[] = [
   {
@@ -28,11 +28,33 @@ export const services: Service[] = [
     id: 'vitrificacao-pintura',
     name: 'Vitrificação de Pintura',
     description: 'Aplicação de um revestimento cerâmico para proteção superior, brilho intenso e durabilidade de até 3 anos.',
-    Icon: Paintbrush,
+    Icon: ShieldCheck,
     prices: [
       { vehicleType: 'Carro Pequeno', price: 'R$ 1200' },
       { vehicleType: 'Carro Médio/SUV', price: 'R$ 1500' },
       { vehicleType: 'Carro Grande/Caminhonete', price: 'R$ 1800' },
+    ],
+  },
+  {
+    id: 'reparo-pintura',
+    name: 'Reparo de Pintura',
+    description: 'Correção de danos localizados, como arranhões, lascas e pequenos amassados, restaurando a aparência original da peça.',
+    Icon: SprayCan,
+    prices: [
+      { vehicleType: 'Por Peça', price: 'A partir de R$ 350' },
+      { vehicleType: 'Para-choque', price: 'A partir de R$ 400' },
+      { vehicleType: 'Teto ou Capô', price: 'A partir de R$ 500' },
+    ],
+  },
+  {
+    id: 'pintura-completa',
+    name: 'Pintura Completa',
+    description: 'Renovação total da cor do veículo. Preparação completa da superfície para um acabamento perfeito e duradouro.',
+    Icon: Paintbrush,
+    prices: [
+      { vehicleType: 'Carro Pequeno', price: 'Sob consulta' },
+      { vehicleType: 'Carro Médio/SUV', price: 'Sob consulta' },
+      { vehicleType: 'Carro Grande', price: 'Sob consulta' },
     ],
   },
 ];
