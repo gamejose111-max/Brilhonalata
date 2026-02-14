@@ -16,6 +16,7 @@ import {
 import { cn } from '@/lib/utils';
 import { Logo } from './logo';
 import { useAuth, useUser } from '@/firebase';
+import { ThemeToggle } from './theme-toggle';
 
 const navLinks = [
   { href: '/', label: 'Início' },
@@ -59,6 +60,7 @@ export default function Header() {
           ))}
         </nav>
         <div className="flex flex-1 items-center justify-end gap-2 md:hidden">
+          <ThemeToggle />
           <Sheet open={isMobileMenuOpen} onOpenChange={setIsMobileMenuOpen}>
             <SheetTrigger asChild>
               <Button variant="outline" size="icon">
@@ -101,6 +103,7 @@ export default function Header() {
           </Sheet>
         </div>
         <div className="hidden flex-1 items-center justify-end gap-4 md:flex">
+          <ThemeToggle />
           {user ? (
             <Button variant="ghost" onClick={handleLogout} size="sm">
               <LogOut className="mr-2 h-4 w-4" />

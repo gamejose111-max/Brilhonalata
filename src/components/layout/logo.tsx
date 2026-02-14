@@ -13,10 +13,12 @@ export const Logo = () => {
       <style>
         {`
           .logo-text {
-            font-family: 'Anton', sans-serif;
-            font-size: 28px;
+            font-family: 'Inter', sans-serif;
+            font-weight: 900;
+            font-size: 24px;
             fill: currentColor;
             text-anchor: start;
+            letter-spacing: -0.5px;
           }
         `}
       </style>

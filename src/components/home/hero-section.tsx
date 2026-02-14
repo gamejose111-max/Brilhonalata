@@ -35,13 +35,13 @@ export default function HeroSection() {
           data-ai-hint={heroImage.imageHint}
         />
       )}
-      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent" />
+      <div className="absolute inset-0 bg-black/60" />
       <div className="relative z-10 flex h-full flex-col items-center justify-center text-center text-white">
         <div className="container">
-          <h1 className="text-4xl font-bold tracking-tight text-primary-foreground sm:text-5xl md:text-6xl lg:text-7xl">
+          <h1 className="text-4xl font-bold tracking-tight text-white drop-shadow-lg sm:text-5xl md:text-6xl lg:text-7xl">
             Restaure o Brilho do Seu Carro
           </h1>
-          <p className="mx-auto mt-6 max-w-3xl text-lg text-primary-foreground/90 md:text-xl">
+          <p className="mx-auto mt-6 max-w-3xl text-lg text-gray-200 drop-shadow-md md:text-xl">
             Serviços profissionais de polimento e pintura que trazem a vida de volta ao seu veículo.
           </p>
           <div className="mt-10 flex justify-center gap-4">
