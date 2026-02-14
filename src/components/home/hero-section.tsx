@@ -1,5 +1,6 @@
 'use client';
 
+import { useEffect, useState } from 'react';
 import { PlaceHolderImages } from '@/lib/placeholder-images';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -16,6 +17,11 @@ import ServicesSection from './services-section';
 
 export default function HeroSection() {
   const heroImage = PlaceHolderImages.find((img) => img.id === 'hero-car');
+  const [isMounted, setIsMounted] = useState(false);
+
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
 
   return (
     <section className="relative h-[60vh] min-h-[500px] w-full">
@@ -42,22 +48,28 @@ export default function HeroSection() {
             <Button size="lg" asChild>
               <Link href="/agendar">Agendar Agora</Link>
             </Button>
-            <Dialog>
-              <DialogTrigger asChild>
-                <Button size="lg" variant="secondary">
-                  Ver Serviços
+            {isMounted ? (
+                <Dialog>
+                <DialogTrigger asChild>
+                    <Button size="lg" variant="secondary">
+                    Ver Serviços
+                    </Button>
+                </DialogTrigger>
+                <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto">
+                    <DialogHeader>
+                    <DialogTitle className="text-3xl font-bold tracking-tight sm:text-4xl text-center">Nossos Serviços</DialogTitle>
+                    <DialogDescription className="text-lg text-muted-foreground text-center !mt-4">
+                        Oferecemos uma gama completa de serviços para cuidar da estética do seu veículo com a máxima qualidade.
+                    </DialogDescription>
+                    </DialogHeader>
+                    <ServicesSection showHeader={false} />
+                </DialogContent>
+                </Dialog>
+            ) : (
+                <Button size="lg" variant="secondary" disabled>
+                    Ver Serviços
                 </Button>
-              </DialogTrigger>
-              <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto">
-                <DialogHeader>
-                  <DialogTitle className="text-3xl font-bold tracking-tight sm:text-4xl text-center">Nossos Serviços</DialogTitle>
-                  <DialogDescription className="text-lg text-muted-foreground text-center !mt-4">
-                    Oferecemos uma gama completa de serviços para cuidar da estética do seu veículo com a máxima qualidade.
-                  </DialogDescription>
-                </DialogHeader>
-                <ServicesSection showHeader={false} />
-              </DialogContent>
-            </Dialog>
+            )}
           </div>
         </div>
       </div>
