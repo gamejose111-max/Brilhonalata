@@ -11,12 +11,18 @@ const bookingsFilePath = path.join(process.cwd(), 'src', 'lib', 'bookings.json')
 async function getBookingsFromFile(): Promise<Booking[]> {
   try {
     const data = await fs.readFile(bookingsFilePath, 'utf-8');
+    if (!data.trim()) {
+      return [];
+    }
     return JSON.parse(data) as Booking[];
-  } catch (error) {
-    if ((error as NodeJS.ErrnoException).code === 'ENOENT') {
+  } catch (error: any) {
+    if (error.code === 'ENOENT') {
       return []; // File doesn't exist, return empty array
     }
-    throw error;
+    // For other errors (like malformed JSON), log it and return an empty array
+    // to prevent the app from crashing.
+    console.error(`Failed to read or parse bookings.json:`, error);
+    return [];
   }
 }
 
