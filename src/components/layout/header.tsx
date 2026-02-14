@@ -1,8 +1,9 @@
 'use client';
 
-import { Car, Menu } from 'lucide-react';
+import { Menu } from 'lucide-react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import Image from 'next/image';
 
 import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
@@ -23,11 +24,14 @@ export default function Header() {
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="container flex h-16 items-center">
-        <Link href="/" className="mr-8 flex items-center gap-2">
-          <Car className="h-6 w-6 text-primary" />
-          <span className="hidden font-bold sm:inline-block">
-            Brilho da Lata
-          </span>
+        <Link href="/" className="mr-8 flex items-center">
+          <Image
+            src="/logo.png"
+            alt="Brilho da Lata"
+            width={150}
+            height={40}
+            priority
+          />
         </Link>
         <nav className="hidden items-center gap-6 text-sm font-medium md:flex">
           {navLinks.map(({ href, label }) => (
@@ -52,9 +56,13 @@ export default function Header() {
               </Button>
             </SheetTrigger>
             <SheetContent side="left">
-              <Link href="/" className="mb-8 flex items-center gap-2">
-                <Car className="h-6 w-6 text-primary" />
-                <span className="font-bold">Brilho da Lata</span>
+              <Link href="/" className="mb-8 flex items-center">
+                <Image
+                  src="/logo.png"
+                  alt="Brilho da Lata"
+                  width={150}
+                  height={40}
+                />
               </Link>
               <nav className="flex flex-col gap-6 text-lg font-medium">
                 {navLinks.map(({ href, label }) => (
