@@ -35,7 +35,7 @@ export default function GallerySection() {
                 </p>
                 <div className="pt-4">
                     <Button size="lg" asChild>
-                        <Link href="https://www.instagram.com/brilho_na_lataa/" target="_blank" rel="noopener noreferrer">
+                        <Link href="https://www.instagram.com/brilhonalata_13?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" target="_blank" rel="noopener noreferrer">
                             Ver Galeria no Instagram
                             <ArrowRight className="ml-2 h-5 w-5" />
                         </Link>
