@@ -3,17 +3,18 @@
 import { Menu } from 'lucide-react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import { useState } from 'react';
 
 import { Button } from '@/components/ui/button';
 import {
   Sheet,
   SheetContent,
+  SheetDescription,
   SheetTitle,
   SheetTrigger,
-  SheetDescription,
 } from '@/components/ui/sheet';
 import { cn } from '@/lib/utils';
-import { useState } from 'react';
+import { Logo } from './logo';
 
 const navLinks = [
   { href: '/', label: 'Início' },
@@ -21,28 +22,6 @@ const navLinks = [
   { href: '/agendar', label: 'Agendar' },
   { href: '/admin', label: 'Admin' },
 ];
-
-const Logo = () => (
-  <svg
-    width="150"
-    height="40"
-    viewBox="0 0 150 40"
-    fill="currentColor"
-    xmlns="http://www.w3.org/2000/svg"
-    aria-label="Brilho na Lata"
-  >
-    <text
-      x="50%"
-      y="50%"
-      dominantBaseline="middle"
-      textAnchor="middle"
-      className="font-bold"
-      style={{ fontSize: '18px' }}
-    >
-      Brilho na Lata
-    </text>
-  </svg>
-);
 
 export default function Header() {
   const pathname = usePathname();

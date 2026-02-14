@@ -1,26 +1,5 @@
 import React from 'react';
-
-const Logo = () => (
-    <svg
-        width="150"
-        height="40"
-        viewBox="0 0 150 40"
-        fill="currentColor"
-        xmlns="http://www.w3.org/2000/svg"
-        aria-label="Brilho na Lata"
-    >
-        <text
-            x="50%"
-            y="50%"
-            dominantBaseline="middle"
-            textAnchor="middle"
-            className="font-bold"
-            style={{ fontSize: '18px' }}
-        >
-            Brilho na Lata
-        </text>
-    </svg>
-);
+import { Logo } from './logo';
 
 
 export default function Footer() {
