@@ -46,7 +46,9 @@ export default function Header() {
           <Logo />
         </Link>
         <nav className="hidden items-center gap-6 text-sm font-medium md:flex">
-          {navLinks.map(({ href, label }) => (
+          {navLinks
+            .filter((link) => link.href !== '/admin' || user)
+            .map(({ href, label }) => (
             <Link
               key={href}
               href={href}
@@ -77,7 +79,9 @@ export default function Header() {
                 <Logo />
               </Link>
               <nav className="flex flex-col gap-6 text-lg font-medium">
-                {navLinks.map(({ href, label }) => (
+                {navLinks
+                  .filter((link) => link.href !== '/admin' || user)
+                  .map(({ href, label }) => (
                   <Link
                     key={href}
                     href={href}
