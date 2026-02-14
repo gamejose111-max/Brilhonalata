@@ -1,7 +1,11 @@
+'use client';
+
 import { PlaceHolderImages } from '@/lib/placeholder-images';
 import Image from 'next/image';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
+import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog';
+import ServicesSection from './services-section';
 
 export default function HeroSection() {
   const heroImage = PlaceHolderImages.find((img) => img.id === 'hero-car');
@@ -31,9 +35,16 @@ export default function HeroSection() {
             <Button size="lg" asChild>
               <Link href="/agendar">Agendar Agora</Link>
             </Button>
-            <Button size="lg" variant="secondary" asChild>
-              <Link href="/#servicos">Ver Serviços</Link>
-            </Button>
+            <Dialog>
+              <DialogTrigger asChild>
+                <Button size="lg" variant="secondary">
+                  Ver Serviços
+                </Button>
+              </DialogTrigger>
+              <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto">
+                <ServicesSection />
+              </DialogContent>
+            </Dialog>
           </div>
         </div>
       </div>

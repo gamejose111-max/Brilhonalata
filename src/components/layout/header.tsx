@@ -18,7 +18,6 @@ import { Logo } from './logo';
 
 const navLinks = [
   { href: '/', label: 'Início' },
-  { href: '/#servicos', label: 'Serviços' },
   { href: '/agendar', label: 'Agendar' },
   { href: '/admin', label: 'Admin' },
 ];
