@@ -1,0 +1,103 @@
+/**
+ * Core Philosophy: This ruleset implements a centralized administrative access model for the 'Brilho da Lata' application.
+ * A single business owner, defined in the '/roles_owner' collection, has full control over managing services and appointments.
+ * The public can view services and create new appointments, but all customer data remains private and is only accessible to the owner.
+ *
+ * Data Structure: The data is organized into three distinct top-level collections:
+ * - /services/{serviceId}: A public catalog of services offered.
+ * - /appointments/{appointmentId}: A private log of customer bookings.
+ * - /roles_owner/{userId}: A special collection for Database Access Control (DBAC) that lists the UIDs of users with owner privileges.
+ *
+ * Key Security Decisions:
+ * - Owner Privilege via DBAC: A user is considered an 'owner' if their auth UID exists as a document ID in the '/roles_owner' collection.
+ *   This is checked using a single, efficient `exists()` call, centralizing permission logic.
+ * - Public Appointment Creation: To lower the barrier to entry for customers, anyone (including unauthenticated users) can create an appointment.
+ *   However, all read and modification access to the '/appointments' collection is strictly limited to the owner.
+ * - Owner Roles are Console-Managed: To prevent privilege escalation attacks from the client, all write operations to the '/roles_owner' collection are disabled.
+ *   Adding or removing owners must be done directly in the Firebase Console.
+ *
+ * Denormalization for Authorization: The '/roles_owner' collection is the primary example of this principle. Instead of checking a role on a user
+ * profile document, we use a simple existence check in a dedicated collection. This makes authorization rules for other collections like
+ * '/services' and '/appointments' fast, simple, and independent of other document data.
+ *
+ * Structural Segregation: Publicly browsable data (/services) is kept in a separate collection from private customer data (/appointments).
+ * This provides a clear security boundary and enables safe and performant public list queries on services without exposing any private information.
+ */
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Helper Functions for Reusable Logic
+
+    /**
+     * Checks if the currently authenticated user is a designated owner.
+     * The owner role is determined by the existence of their UID as a document
+     * in the /roles_owner collection.
+     */
+    function isOwner() {
+      return exists(/databases/$(database)/documents/roles_owner/$(request.auth.uid));
+    }
+
+    /**
+     * Checks if a document exists and the requester is the owner.
+     * Used for all state-changing operations (update, delete) to ensure they
+     * are acting on existing data and have the correct permissions.
+     */
+    function isExistingDocAndOwner() {
+      return isOwner() && resource != null;
+    }
+
+    /**
+     * Checks if the requester's UID matches the document ID in the path.
+     * Used to grant a user access to their own specific document, such as their role entry.
+     */
+    function isSelf(userId) {
+      return request.auth.uid == userId;
+    }
+
+    /**
+     * @description Public catalog of services. Anyone can view the services, but only the owner can manage them.
+     * @path /services/{serviceId}
+     * @allow (get) Any user, authenticated or not, can read a specific service's details.
+     * @deny (create) An authenticated user who is not an owner tries to add a new service.
+     * @principle Implements a "Public Read with Owner-Only Writes" model using a centralized DBAC role check.
+     */
+    match /services/{serviceId} {
+      allow get, list: if true;
+      allow create: if isOwner();
+      allow update, delete: if isExistingDocAndOwner();
+    }
+
+    /**
+     * @description Collection of customer appointments. Anyone can submit a new appointment request.
+     *   However, only the business owner can view, manage, or delete appointments to protect customer privacy.
+     * @path /appointments/{appointmentId}
+     * @allow (create) An unauthenticated website visitor submits a new appointment request.
+     * @deny (list) A regular user or another customer tries to list all appointments.
+     * @principle Enforces strict privacy by allowing public creation but restricting all subsequent access to the owner.
+     */
+    match /appointments/{appointmentId} {
+      allow get, list: if isOwner();
+      allow create: if true;
+      allow update, delete: if isExistingDocAndOwner();
+    }
+
+    /**
+     * @description Defines which users have owner-level privileges across the database.
+     *   This collection is read-only from the client to prevent privilege escalation.
+     *   It should be managed exclusively through the Firebase Console.
+     * @path /roles_owner/{userId}
+     * @allow (get) An owner (auth.uid='owner_abc') reads their own role document at /roles_owner/owner_abc.
+     * @deny (list) Anyone, including an owner, tries to list all documents in this collection.
+     * @deny (create) An attacker tries to add their own UID to this collection to become an owner.
+     * @principle Secures the administrative access control list by making it read-only from clients.
+     */
+    match /roles_owner/{userId} {
+      allow get: if isSelf(userId);
+      allow list: if false;
+      allow create: if false;
+      allow update: if false;
+      allow delete: if false;
+    }
+  }
+}

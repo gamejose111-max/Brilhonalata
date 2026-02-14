@@ -1,0 +1,206 @@
+{
+  "entities": {
+    "Service": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "Service",
+      "type": "object",
+      "description": "Represents a specific automotive polishing or painting service offered by Brilho da Lata, including its description and pricing.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the Service entity."
+        },
+        "name": {
+          "type": "string",
+          "description": "The name of the service, e.g., 'Polimento Completo'."
+        },
+        "description": {
+          "type": "string",
+          "description": "A detailed description of what the service entails."
+        },
+        "price": {
+          "type": "number",
+          "description": "The monetary cost of the service."
+        },
+        "estimatedDurationMinutes": {
+          "type": "number",
+          "description": "The estimated duration of the service in minutes."
+        }
+      },
+      "required": [
+        "id",
+        "name",
+        "description",
+        "price",
+        "estimatedDurationMinutes"
+      ]
+    },
+    "Appointment": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "Appointment",
+      "type": "object",
+      "description": "Represents a customer's scheduled booking for an automotive service at Brilho da Lata.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the Appointment entity."
+        },
+        "serviceId": {
+          "type": "string",
+          "description": "Reference to the Service booked. (Relationship: Service 1:N Appointment)"
+        },
+        "customerName": {
+          "type": "string",
+          "description": "The full name of the customer who made the appointment."
+        },
+        "customerEmail": {
+          "type": "string",
+          "description": "The email address of the customer for communication regarding the appointment.",
+          "format": "email"
+        },
+        "customerPhone": {
+          "type": "string",
+          "description": "The phone number of the customer."
+        },
+        "vehicleMake": {
+          "type": "string",
+          "description": "The make of the customer's vehicle (e.g., 'Ford', 'Chevrolet')."
+        },
+        "vehicleModel": {
+          "type": "string",
+          "description": "The model of the customer's vehicle (e.g., 'Fiesta', 'Onix')."
+        },
+        "vehicleYear": {
+          "type": "number",
+          "description": "The manufacturing year of the customer's vehicle."
+        },
+        "appointmentDateTime": {
+          "type": "string",
+          "description": "The specific date and time for which the service is scheduled.",
+          "format": "date-time"
+        },
+        "status": {
+          "type": "string",
+          "description": "The current status of the appointment (e.g., 'pending', 'accepted', 'rejected', 'completed', 'cancelled')."
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "The timestamp when the appointment record was created.",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "description": "The timestamp when the appointment record was last updated.",
+          "format": "date-time"
+        },
+        "adminNotes": {
+          "type": "string",
+          "description": "Internal notes added by the 'Brilho da Lata' owner/administrator regarding the appointment."
+        }
+      },
+      "required": [
+        "id",
+        "serviceId",
+        "customerName",
+        "customerEmail",
+        "vehicleMake",
+        "vehicleModel",
+        "vehicleYear",
+        "appointmentDateTime",
+        "status",
+        "createdAt",
+        "updatedAt"
+      ]
+    },
+    "AdminUser": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "AdminUser",
+      "type": "object",
+      "description": "Represents an administrative user with access to the management panel, primarily the owner of Brilho da Lata.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the AdminUser entity."
+        },
+        "email": {
+          "type": "string",
+          "description": "The email address used for administrative login.",
+          "format": "email"
+        },
+        "name": {
+          "type": "string",
+          "description": "The full name of the administrator."
+        },
+        "role": {
+          "type": "string",
+          "description": "The role of the administrator within the system (e.g., 'owner')."
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "The timestamp when the admin user record was created.",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "description": "The timestamp when the admin user record was last updated.",
+          "format": "date-time"
+        }
+      },
+      "required": [
+        "id",
+        "email",
+        "name",
+        "role",
+        "createdAt",
+        "updatedAt"
+      ]
+    }
+  },
+  "auth": {
+    "providers": [
+      "password",
+      "anonymous"
+    ]
+  },
+  "firestore": {
+    "structure": [
+      {
+        "path": "/services/{serviceId}",
+        "definition": {
+          "entityName": "Service",
+          "schema": {
+            "$ref": "#/backend/entities/Service"
+          },
+          "description": "Collection of all available automotive services offered by Brilho da Lata. Publicly readable for customers to browse, but only the authenticated owner can create, update, or delete services."
+        }
+      },
+      {
+        "path": "/appointments/{appointmentId}",
+        "definition": {
+          "entityName": "Appointment",
+          "schema": {
+            "$ref": "#/backend/entities/Appointment"
+          },
+          "description": "Collection of all customer appointments. Unauthenticated customers can create new appointments. Only the authenticated owner can read, update, or delete appointments. This ensures the owner has full control over the appointment schedule and prevents unauthorized access to sensitive customer information. Does not include specific denormalized owner IDs as owner access is global via the /roles_owner collection."
+        }
+      },
+      {
+        "path": "/roles_owner/{userId}",
+        "definition": {
+          "entityName": "AdminUser",
+          "schema": {
+            "$ref": "#/backend/entities/AdminUser"
+          },
+          "description": "A collection used for Database Access Control (DBAC) to define the owner(s) of the application. Documents in this collection will correspond to authenticated user UIDs that have 'owner' privileges. Authorization for administrative actions (e.g., managing services, appointments) will rely on checking if request.auth.uid exists in this collection. Read access is restricted to the specific owner (request.auth.uid == userId), primarily for rules validation.",
+          "params": [
+            {
+              "name": "userId",
+              "description": "The unique Firebase Authentication UID of the administrator/owner."
+            }
+          ]
+        }
+      }
+    ],
+    "reasoning": "The Firestore structure for 'Brilho da Lata Scheduling' prioritizes secure access for the business owner while providing public access to services and an open channel for customers to schedule appointments. The core of the design revolves around a clear segregation of data based on its security posture and the explicit definition of roles using database entries (DBAC). \n\n**Authorization Independence:** This is achieved primarily through the use of a dedicated `/roles_owner/{userId}` collection. Instead of relying on hierarchical lookups (`get()`) that could break atomic operations or complicate rules, authorization for administrative actions (managing services, viewing/managing appointments) is determined by checking if `request.auth.uid` matches the ID of a document in the `/roles_owner` collection using an `exists()` check. This denormalizes the 'owner' role to a simple lookup, making rules atomic and easy to debug. For instance, an owner's permission to modify a service or an appointment doesn't depend on any attribute of the service or appointment document itself, but solely on their authenticated UID's presence in the `/roles_owner` collection.\n\n**QAPs (Rules are not Filters):** This structure ensures Query-as-Permission by clearly defining access for entire collections or subcollections. \n*   The `/services` collection is publicly readable, meaning any client can perform a `list` query and retrieve all services without the need for server-side filtering. Write access is restricted to the authenticated owner. \n*   The `/appointments` collection allows unauthenticated users to create new appointments. However, all `read`, `update`, and `delete` operations on this collection are restricted exclusively to the authenticated owner. This ensures that when the owner queries (lists) appointments, they get all relevant data without filtering concerns, and customers cannot query others' appointments or modify existing ones. \n*   The `/roles_owner` collection is designed for an `exists()` check in security rules, not for general `list` operations by end-users. Access to read individual documents in this collection is restricted to the owner matching their `uid` to the document ID. This clear segregation of access responsibilities makes security rules robust and predictable."
+  }
+}
