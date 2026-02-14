@@ -52,7 +52,7 @@ export default function AnimatedServicesSection() {
             {services.map((service) => (
               <div key={service.id} className="relative flex min-h-[120px] items-center">
                 {/* O ponto na linha do tempo. Corrigi sua posição horizontal. */}
-                <div className="absolute -left-18 top-1/2 h-4 w-4 -translate-y-1/2 rounded-full bg-primary ring-4 ring-card"></div>
+                <div className="absolute -left-[72px] top-1/2 h-4 w-4 -translate-y-1/2 rounded-full bg-primary ring-4 ring-card"></div>
                 <div>
                     <h3 className="text-2xl font-semibold mb-2">{service.name}</h3>
                     <p className="text-muted-foreground max-w-md">{service.description}</p>
