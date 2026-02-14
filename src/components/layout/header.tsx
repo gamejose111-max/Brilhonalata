@@ -6,7 +6,13 @@ import { usePathname } from 'next/navigation';
 import Image from 'next/image';
 
 import { Button } from '@/components/ui/button';
-import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
+import {
+  Sheet,
+  SheetContent,
+  SheetDescription,
+  SheetTitle,
+  SheetTrigger,
+} from '@/components/ui/sheet';
 import { cn } from '@/lib/utils';
 import { useState } from 'react';
 
@@ -56,6 +62,10 @@ export default function Header() {
               </Button>
             </SheetTrigger>
             <SheetContent side="left">
+              <SheetTitle className="sr-only">Menu</SheetTitle>
+              <SheetDescription className="sr-only">
+                Navegação principal do site
+              </SheetDescription>
               <Link href="/" className="mb-8 flex items-center">
                 <Image
                   src="/logo.png"
