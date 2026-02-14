@@ -161,7 +161,7 @@ export function BookingForm() {
           render={({ field }) => (
             <FormItem>
               <FormLabel>Serviço Desejado</FormLabel>
-              <Select onValueChange={field.onChange} defaultValue={field.value}>
+              <Select onValueChange={field.onChange} value={field.value}>
                 <FormControl>
                   <SelectTrigger>
                     <SelectValue placeholder="Selecione um serviço" />
@@ -229,7 +229,7 @@ export function BookingForm() {
                 <FormControl>
                     <RadioGroup
                     onValueChange={field.onChange}
-                    defaultValue={field.value}
+                    value={field.value}
                     className="grid grid-cols-2 gap-4 sm:grid-cols-4"
                     >
                     {timeSlots.map((slot) => {
