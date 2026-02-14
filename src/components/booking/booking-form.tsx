@@ -50,10 +50,14 @@ const formSchema = z.object({
 
 export function BookingForm() {
   const { toast } = useToast();
-  const [initialState, formAction] = useActionState(createBooking, { type: 'initial' });
-  const [pending, setPending] = useState(false);
+  const [initialState, formAction, isPending] = useActionState(createBooking, { type: 'initial' });
   const [bookedSlots, setBookedSlots] = useState<string[]>([]);
   const [isFetchingSlots, setIsFetchingSlots] = useState(false);
+  const [minDate] = useState(() => {
+    const d = new Date();
+    d.setHours(0, 0, 0, 0);
+    return d;
+  });
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -80,7 +84,6 @@ export function BookingForm() {
         variant: 'destructive',
       });
     }
-    setPending(false);
   }, [initialState, toast, form]);
   
   useEffect(() => {
@@ -97,7 +100,6 @@ export function BookingForm() {
   }, [selectedDate, form]);
 
   const handleSubmit = (data: z.infer<typeof formSchema>) => {
-    setPending(true);
     const formData = new FormData();
     Object.entries(data).forEach(([key, value]) => {
       if (value instanceof Date) {
@@ -207,7 +209,7 @@ export function BookingForm() {
                     mode="single"
                     selected={field.value}
                     onSelect={field.onChange}
-                    disabled={(date) => date < new Date() || date.getDay() === 0 }
+                    disabled={(date) => date < minDate || date.getDay() === 0 }
                     initialFocus
                   />
                 </PopoverContent>
@@ -249,8 +251,8 @@ export function BookingForm() {
            )}
          />
         )}
-        <Button type="submit" className="w-full" disabled={pending}>
-          {pending && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+        <Button type="submit" className="w-full" disabled={isPending}>
+          {isPending && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
           Solicitar Agendamento
         </Button>
       </form>
