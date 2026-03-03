@@ -2,31 +2,27 @@
 
 Seu site profissional está pronto para entrar no ar! Siga este guia rápido para hospedar gratuitamente no **Netlify**.
 
-## 🛠️ Passo 1: Como lidar com o erro no Google Studio
-Se você não conseguiu pegar a chave da IA (Gemini), não se preocupe. O site foi atualizado para **não quebrar** sem ela. Ele mostrará um botão para o cliente falar consigo no WhatsApp.
+## 🛠️ Passo 1: Configuração no Netlify (Pelo Celular)
+Na tela que você abriu, preencha os campos assim:
 
-Se quiser tentar novamente mais tarde:
-1. Acesse: **[Google AI Studio](https://aistudio.google.com/app/apikey)**.
-2. Use uma conta de e-mail que não seja gerenciada por pais/escola.
-3. Clique em **"Create API key"**.
+1.  **Branch to deploy:** `main`
+2.  **Base directory:** (deixe vazio)
+3.  **Build command:** `npm run build`
+4.  **Publish directory:** `.next` (se o Netlify pedir)
 
-## 🌐 Passo 2: Publicar no Netlify (Grátis)
-No Netlify, ao conectar seu projeto do GitHub, preencha assim:
+## 🤖 Passo 2: E a Inteligência Artificial (Gemini)?
+Se você não conseguiu pegar a chave no Google AI Studio (por causa de erro na conta ou região), **não se preocupe**. O site foi programado para ser "inteligente":
+- **Sem a chave:** O site mostrará uma mensagem profissional convidando o cliente para conversar pelo WhatsApp ou fazer um agendamento manual.
+- **Com a chave:** Se conseguir a chave mais tarde, vá em **Site Settings > Environment Variables** no Netlify e adicione `GEMINI_API_KEY`. O site ativará a IA sozinho!
 
-1. **Build command:** `npm run build`
-2. **Publish directory:** `.next`
-3. **Environment Variables (Variáveis de Ambiente):**
-   - **Key:** `GEMINI_API_KEY`
-   - **Value:** (Sua chave do Google, se tiver. Se não tiver, pode deixar em branco por agora).
-
-## 🔐 Passo 3: Configurar o Admin (Muito Importante!)
-Como agora usamos o banco de dados do Firebase para os agendamentos:
+## 🔐 Passo 3: Configurar o Admin (Segurança)
+Como usamos o Firebase para salvar os agendamentos na nuvem:
 1. No Console do Firebase, vá em **Firestore Database**.
 2. Crie uma coleção chamada `roles_owner`.
-3. Adicione um documento onde o **ID do documento** é o seu **UID de usuário** (que você vê na aba Authentication após fazer o primeiro login).
-4. Dentro do documento, coloque um campo `role` com valor `owner`.
+3. Adicione um documento onde o **ID do documento** é o seu **UID de usuário** (que você vê na aba Authentication após o primeiro login).
+4. No campo, coloque `role` com o valor `owner`.
 
-Isso garante que só você possa ver os agendamentos dos clientes!
+Isso garante que apenas você veja as mensagens e agendamentos dos seus clientes!
 
 ---
-Desenvolvido com paixão para a estética automotiva em **Cascais**. 🏎️✨
+Desenvolvido com foco na perfeição automotiva em **Cascais**. 🏎️✨
