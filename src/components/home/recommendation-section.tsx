@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
-import { Bot, Loader2, Sparkles } from 'lucide-react';
+import { Bot, Loader2, Sparkles, AlertCircle } from 'lucide-react';
 
 import { Button } from '@/components/ui/button';
 import {
@@ -24,6 +24,7 @@ import {
   FormMessage,
 } from '@/components/ui/form';
 import { Textarea } from '@/components/ui/textarea';
+import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import {
   recommendService,
   type ServiceRecommendationOutput,
@@ -58,9 +59,10 @@ export default function RecommendationSection() {
     setError(null);
     try {
       const result = await recommendService(values);
+      if (!result) throw new Error('No recommendation returned');
       setRecommendation(result);
     } catch (e) {
-      setError('Ocorreu um erro ao buscar a recomendação. Tente novamente.');
+      setError('A Inteligência Artificial está a ser configurada. Por favor, tente novamente em alguns minutos ou contacte-nos diretamente.');
       console.error(e);
     } finally {
       setIsLoading(false);
@@ -79,7 +81,7 @@ export default function RecommendationSection() {
             Não Sabe Qual Serviço Escolher?
           </h2>
           <p className="mt-4 text-lg text-muted-foreground">
-            Use nossa ferramenta inteligente para obter uma recomendação de serviço personalizada para o seu veículo.
+            Use nossa ferramenta inteligente para obter uma recomendação personalizada para o seu veículo em Cascais.
           </p>
         </div>
         <div className="mx-auto grid max-w-6xl gap-8 lg:grid-cols-2">
@@ -87,7 +89,7 @@ export default function RecommendationSection() {
             <CardHeader>
               <CardTitle>Receba uma Recomendação</CardTitle>
               <CardDescription>
-                Preencha os campos abaixo para que nossa IA sugira o melhor serviço.
+                Explique-nos o que o seu carro precisa e a nossa IA ajudará.
               </CardDescription>
             </CardHeader>
             <CardContent>
@@ -104,7 +106,7 @@ export default function RecommendationSection() {
                         <FormLabel>Condição Atual do Veículo</FormLabel>
                         <FormControl>
                           <Textarea
-                            placeholder="Ex: Pintura fosca, com arranhões leves e algumas manchas..."
+                            placeholder="Ex: Pintura fosca, com arranhões leves e algumas manchas do sol..."
                             {...field}
                             rows={4}
                           />
@@ -121,7 +123,7 @@ export default function RecommendationSection() {
                         <FormLabel>Resultado Desejado</FormLabel>
                         <FormControl>
                           <Textarea
-                            placeholder="Ex: Quero restaurar o brilho, remover os arranhões e proteger a pintura..."
+                            placeholder="Ex: Quero restaurar o brilho original e proteger contra o salitre de Cascais..."
                             {...field}
                             rows={4}
                           />
@@ -136,7 +138,7 @@ export default function RecommendationSection() {
                     ) : (
                       <Bot className="mr-2 h-4 w-4" />
                     )}
-                    Obter Recomendação
+                    Obter Recomendação Inteligente
                   </Button>
                 </form>
               </Form>
@@ -146,48 +148,62 @@ export default function RecommendationSection() {
             {isLoading && (
               <Card className="flex w-full flex-col items-center justify-center p-8">
                 <Loader2 className="h-12 w-12 animate-spin text-primary" />
-                <p className="mt-4 text-muted-foreground">Analisando...</p>
+                <p className="mt-4 text-muted-foreground">Analisando o seu pedido...</p>
               </Card>
             )}
             {error && (
-              <Card className="flex w-full flex-col items-center justify-center p-8 text-destructive">
-                <p>{error}</p>
-              </Card>
+              <div className="w-full">
+                <Alert variant="destructive">
+                  <AlertCircle className="h-4 w-4" />
+                  <AlertTitle>IA em Manutenção</AlertTitle>
+                  <AlertDescription>
+                    {error}
+                  </AlertDescription>
+                </Alert>
+                <Button variant="outline" className="mt-4 w-full" onClick={() => setError(null)}>
+                  Tentar Novamente
+                </Button>
+              </div>
             )}
             {recommendation && (
-              <Card className="w-full animate-fade-in">
+              <Card className="w-full animate-fade-in border-primary/50">
                 <CardHeader>
-                  <CardTitle>Pacote Recomendado</CardTitle>
+                  <CardTitle className="flex items-center gap-2">
+                    <Sparkles className="h-5 w-5 text-primary" />
+                    Sugestão Brilho na Lata
+                  </CardTitle>
                   <CardDescription>
-                    Com base nas suas informações, esta é a nossa sugestão.
+                    Recomendação personalizada baseada no seu relato.
                   </CardDescription>
                 </CardHeader>
                 <CardContent className="space-y-4">
-                  <h3 className="text-xl font-semibold text-primary">
+                  <h3 className="text-xl font-bold text-primary">
                     {recommendation.recommendedPackageName}
                   </h3>
-                  <p>
-                    <strong className="block">Descrição:</strong>{' '}
-                    {recommendation.packageDescription}
-                  </p>
-                  <p>
-                    <strong className="block">Motivo:</strong>{' '}
-                    {recommendation.reasoning}
-                  </p>
+                  <div className="space-y-2 text-sm">
+                    <p>
+                      <strong className="text-foreground">O que inclui:</strong><br />
+                      <span className="text-muted-foreground">{recommendation.packageDescription}</span>
+                    </p>
+                    <p>
+                      <strong className="text-foreground">Por que este serviço?</strong><br />
+                      <span className="text-muted-foreground">{recommendation.reasoning}</span>
+                    </p>
+                  </div>
                 </CardContent>
                 <CardFooter>
-                    <div className="w-full rounded-lg bg-primary/10 p-4 text-center">
-                        <p className="font-semibold">Preço Estimado</p>
+                    <div className="w-full rounded-lg bg-primary/10 p-4 text-center border border-primary/20">
+                        <p className="text-sm font-semibold text-primary">Investimento Estimado</p>
                         <p className="text-2xl font-bold text-primary">{recommendation.estimatedPriceRange}</p>
                     </div>
                 </CardFooter>
               </Card>
             )}
             {!isLoading && !error && !recommendation && (
-                <Card className="flex w-full flex-col items-center justify-center p-8 border-dashed">
+                <Card className="flex h-full w-full flex-col items-center justify-center p-8 border-dashed bg-slate-50/50 dark:bg-slate-900/20">
                     <div className="text-center text-muted-foreground">
-                        <Bot className="mx-auto h-12 w-12" />
-                        <p className="mt-4">Sua recomendação aparecerá aqui.</p>
+                        <Bot className="mx-auto h-12 w-12 opacity-20" />
+                        <p className="mt-4 max-w-[200px] text-sm italic">Preencha o formulário para ver a mágica acontecer.</p>
                     </div>
                 </Card>
             )}

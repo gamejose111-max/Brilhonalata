@@ -1,40 +1,24 @@
-# Brilho na Lata - Guia Final de Lançamento 🚀
+# 🚀 Brilho na Lata - Guia de Lançamento (Netlify)
 
-Este projeto é um site profissional de estética automotiva em Cascais, construído com Next.js 15 e Firebase.
+Seu site está pronto para Cascais! Siga estes passos finais para colocá-lo no ar de graça.
 
-## 🔑 Como pegar sua Chave da IA (Grátis)
+## 🔑 1. Pegar sua Chave da IA (Grátis)
+A IA precisa de um "combustível" para funcionar:
+1. Acesse: **[Google AI Studio](https://aistudio.google.com/app/apikey)**.
+2. Clique em **"Create API key"**.
+3. Copie o código (ex: `AIza...`).
 
-Para que a recomendação inteligente funcione, você precisa de uma chave:
-
-1. Acesse o **[Google AI Studio](https://aistudio.google.com/app/apikey)**.
-2. Faça login com seu Gmail.
-3. Clique em **"Create API key"**.
-4. Copie o código gerado (ex: `AIza...`).
-
-## 🌐 Como colocar o site no ar (Netlify)
-
-Siga estes passos no Netlify:
-
-1. **Configurações de Build:**
-   - **Branch to deploy:** `main` (ou `master`)
-   - **Build command:** `npm run build`
-   - **Publish directory:** `.next`
-
-2. **Configuração da IA (IMPORTANTE):**
-   - Clique em **"Add environment variables"**.
-   - Escolha **"Add a single variable"**.
+## 🌐 2. Configurar no Netlify
+Na tela de Deploy que você abriu:
+1. **Build command:** `npm run build`
+2. **Publish directory:** `.next`
+3. **Environment Variables (Variáveis de Ambiente):**
+   - Clique em **Add variable**.
    - **Key:** `GEMINI_API_KEY`
-   - **Value:** (Cole aqui a chave que você pegou no Google AI Studio).
+   - **Value:** (Cole a chave que você copiou do Google).
 
-3. **Finalizar:**
-   - Clique em **"Deploy brilho-na-lata"**.
-
-## 🛠️ Outras Opções de Hospedagem
-
-### Opção 1: Vercel (Recomendado se o Netlify falhar)
-1. Crie conta na Vercel com GitHub.
-2. Importe o projeto `brilho-na-lata`.
-3. Adicione a `GEMINI_API_KEY` nas "Environment Variables" antes do Deploy.
+## 🛠️ 3. Se o site der erro de "Build"
+O Netlify às vezes precisa saber que é um projeto Next.js. Se o botão de Deploy não funcionar, tente a **Vercel.com**, que é automática para Next.js e também é grátis.
 
 ---
-Desenvolvido para **Brilho na Lata - Cascais, Portugal**. O brilho que o seu carro merece!
+Desenvolvido para **Brilho na Lata - Cascais, Portugal**. 🇵🇹
