@@ -13,14 +13,18 @@ O Firebase App Hosting precisa que seu código esteja no GitHub para funcionar.
 3. No terminal do seu estúdio, execute estes comandos exatamente nesta ordem:
 
 ```bash
-git init
+# 1. Prepare os arquivos
 git add .
-git commit -m "Primeiro upload do site"
-git branch -M main
-# Se o comando abaixo der erro de "remote already exists", apenas pule para o próximo
+git commit -m "Site Completo Brilho na Lata"
+
+# 2. Defina o caminho (Se der erro de "already exists", apenas siga para o próximo passo)
 git remote add origin https://github.com/SEU_USUARIO/brilho-na-lata.git
+
+# 3. Envie para o GitHub
 git push -u origin main
 ```
+
+**Dica para o Erro do Print:** Se aparecer `remote origin already exists`, ignore e rode direto o `git push -u origin main`.
 
 ### 2. Configurar o Firebase App Hosting
 1. Vá para o [Console do Firebase](https://console.firebase.google.com/).
@@ -35,10 +39,5 @@ Se você estiver usando a IA de recomendação:
 1. No painel do App Hosting, vá em "Configurações".
 2. Adicione uma variável chamada `GEMINI_API_KEY` com a sua chave da API.
 
-## Dicas para o Dono
-- **Atualizações:** Sempre que você mudar algo no código e der um `git push`, o site atualizará sozinho em minutos.
-- **Acesso Admin:** Acesse `seusite.com/admin` para ver seus agendamentos (você precisará fazer login).
-- **Suporte:** Este site foi otimizado para o padrão de Cascais, Portugal (Euros e datas locais).
-
 ---
-Desenvolvido para Brilho na Lata - Cascais, Portugal.# brilho-na-lata
+Desenvolvido para Brilho na Lata - Cascais, Portugal.
