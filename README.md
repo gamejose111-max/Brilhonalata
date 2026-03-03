@@ -33,3 +33,4 @@ Se você estiver usando o Google Gemini para a IA de recomendação:
 
 ---
 Desenvolvido para Brilho na Lata - Cascais, Portugal.
+# brilho-na-lata
