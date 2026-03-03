@@ -1,13 +1,14 @@
+
 import type { Metadata } from 'next';
 import './globals.css';
 import { Toaster } from '@/components/ui/toaster';
 import Header from '@/components/layout/header';
 import Footer from '@/components/layout/footer';
-import { FirebaseClientProvider } from '@/firebase';
+import { FirebaseClientProvider } from '@/firebase/client-provider';
 
 export const metadata: Metadata = {
-  title: 'Brilho na Lata Scheduling',
-  description: 'Agendamento de serviços de polimento e pintura automotiva.',
+  title: 'Brilho na Lata - Cascais',
+  description: 'Agendamento de serviços de polimento e pintura automotiva em Cascais, Portugal.',
 };
 
 export default function RootLayout({

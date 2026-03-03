@@ -1,3 +1,4 @@
+
 import { LoginForm } from '@/components/auth/login-form';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Suspense } from 'react';
@@ -15,6 +16,7 @@ export default function LoginPage() {
             </CardDescription>
           </CardHeader>
           <CardContent>
+            {/* O Suspense aqui garante que a Vercel consiga fazer o build da página de login que usa parâmetros de busca */}
             <Suspense fallback={
               <div className="flex flex-col items-center justify-center p-8">
                 <Loader2 className="h-8 w-8 animate-spin text-primary" />
