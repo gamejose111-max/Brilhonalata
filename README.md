@@ -1,4 +1,4 @@
-# Brilho na Lata - Guia de Deploy
+d# Brilho na Lata - Guia de Deploy
 
 Este projeto é um site profissional de estética automotiva (polimento e pintura) em Cascais, construído com Next.js 15 e Firebase.
 
