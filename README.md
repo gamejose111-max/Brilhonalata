@@ -41,4 +41,4 @@ Se você estiver usando a IA de recomendação:
 - **Suporte:** Este site foi otimizado para o padrão de Cascais, Portugal (Euros e datas locais).
 
 ---
-Desenvolvido para Brilho na Lata - Cascais, Portugal.
+Desenvolvido para Brilho na Lata - Cascais, Portugal.# brilho-na-lata
