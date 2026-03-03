@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState, useActionState } from 'react';
+import { useEffect, useState } from 'react';
 import { useForm, Controller } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
@@ -9,10 +9,11 @@ import { pt } from 'date-fns/locale';
 import { CalendarIcon, Loader2 } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 
-import { createBooking, getBookedSlots } from '@/lib/actions';
 import { services, timeSlots } from '@/lib/data';
 import { cn } from '@/lib/utils';
 import { useToast } from '@/hooks/use-toast';
+import { useFirestore } from '@/firebase';
+import { collection, addDoc, query, where, getDocs, serverTimestamp } from 'firebase/firestore';
 
 import { Button } from '@/components/ui/button';
 import { Calendar } from '@/components/ui/calendar';
@@ -43,7 +44,7 @@ import { Label } from '@/components/ui/label';
 const formSchema = z.object({
   name: z.string().min(3, 'Nome deve ter no mínimo 3 caracteres.'),
   email: z.string().email('Email inválido.'),
-  phone: z.string().min(10, 'Telefone inválido.'),
+  phone: z.string().min(9, 'Telefone inválido.'),
   serviceId: z.string({ required_error: 'Por favor, selecione um serviço.' }),
   date: z.date({ required_error: 'Por favor, selecione uma data.' }),
   time: z.string({ required_error: 'Por favor, selecione um horário.' }),
@@ -52,7 +53,8 @@ const formSchema = z.object({
 export function BookingForm() {
   const { toast } = useToast();
   const router = useRouter();
-  const [initialState, formAction, isPending] = useActionState(createBooking, { type: 'initial' });
+  const db = useFirestore();
+  const [isPending, setIsPending] = useState(false);
   const [bookedSlots, setBookedSlots] = useState<string[]>([]);
   const [isFetchingSlots, setIsFetchingSlots] = useState(false);
   const [minDate] = useState(() => {
@@ -73,50 +75,77 @@ export function BookingForm() {
   const selectedDate = form.watch('date');
 
   useEffect(() => {
-    if (initialState.type === 'success') {
-      toast({
-        title: 'Sucesso!',
-        description: initialState.message,
-      });
-      form.reset();
-      router.push('/');
-    } else if (initialState.type === 'error') {
-      toast({
-        title: 'Erro!',
-        description: initialState.message,
-        variant: 'destructive',
-      });
-    }
-  }, [initialState, toast, form, router]);
-  
-  useEffect(() => {
-    if (selectedDate) {
+    if (selectedDate && db) {
       const fetchSlots = async () => {
         setIsFetchingSlots(true);
-        const slots = await getBookedSlots(selectedDate.toISOString());
-        setBookedSlots(slots);
-        setIsFetchingSlots(false);
+        try {
+          const dateOnly = selectedDate.toISOString().split('T')[0];
+          const q = query(
+            collection(db, 'appointments'),
+            where('appointmentDateTime', '>=', dateOnly),
+            where('status', '==', 'confirmed')
+          );
+          const querySnapshot = await getDocs(q);
+          const slots = querySnapshot.docs
+            .filter(doc => doc.data().appointmentDateTime.startsWith(dateOnly))
+            .map(doc => doc.data().time || doc.data().appointmentDateTime.split('T')[1]?.substring(0, 5));
+          
+          setBookedSlots(slots as string[]);
+        } catch (error) {
+          console.error("Erro ao buscar horários:", error);
+        } finally {
+          setIsFetchingSlots(false);
+        }
       };
       fetchSlots();
-      form.resetField('time');
+      form.setValue('time', '');
     }
-  }, [selectedDate, form]);
+  }, [selectedDate, db, form]);
 
-  const handleSubmit = (data: z.infer<typeof formSchema>) => {
-    const formData = new FormData();
-    Object.entries(data).forEach(([key, value]) => {
-      if (value instanceof Date) {
-        formData.append(key, value.toISOString());
-      } else {
-        formData.append(key, value);
-      }
-    });
-    formAction(formData);
+  const onSubmit = async (data: z.infer<typeof formSchema>) => {
+    if (!db) return;
+    setIsPending(true);
+    
+    try {
+      const dateStr = data.date.toISOString().split('T')[0];
+      const dateTimeStr = `${dateStr}T${data.time}:00Z`;
+
+      await addDoc(collection(db, 'appointments'), {
+        customerName: data.name,
+        customerEmail: data.email,
+        customerPhone: data.phone,
+        serviceId: data.serviceId,
+        appointmentDateTime: dateTimeStr,
+        status: 'pending',
+        createdAt: serverTimestamp(),
+        updatedAt: serverTimestamp(),
+        vehicleMake: 'Não informado',
+        vehicleModel: 'Não informado',
+        vehicleYear: new Date().getFullYear(),
+      });
+
+      toast({
+        title: 'Sucesso!',
+        description: 'Seu pedido de agendamento foi enviado com sucesso! Aguarde nosso contacto.',
+      });
+      
+      form.reset();
+      router.push('/');
+    } catch (error) {
+      console.error("Erro ao agendar:", error);
+      toast({
+        title: 'Erro!',
+        description: 'Ocorreu um erro ao processar o seu pedido. Tente novamente.',
+        variant: 'destructive',
+      });
+    } finally {
+      setIsPending(false);
+    }
   };
   
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-8">
+      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
         <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
             <FormField
             control={form.control}
@@ -136,9 +165,9 @@ export function BookingForm() {
             name="phone"
             render={({ field }) => (
                 <FormItem>
-                <FormLabel>Telefone</FormLabel>
+                <FormLabel>Telefone (PT)</FormLabel>
                 <FormControl>
-                    <Input placeholder="(00) 00000-0000" {...field} />
+                    <Input placeholder="912 345 678" {...field} />
                 </FormControl>
                 <FormMessage />
                 </FormItem>

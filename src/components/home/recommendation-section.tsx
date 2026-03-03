@@ -4,7 +4,8 @@ import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
-import { Bot, Loader2, Sparkles, AlertCircle } from 'lucide-react';
+import { Bot, Loader2, Sparkles, AlertCircle, Phone } from 'lucide-react';
+import Link from 'next/link';
 
 import { Button } from '@/components/ui/button';
 import {
@@ -62,7 +63,7 @@ export default function RecommendationSection() {
       if (!result) throw new Error('No recommendation returned');
       setRecommendation(result);
     } catch (e) {
-      setError('A Inteligência Artificial está a ser configurada. Por favor, tente novamente em alguns minutos ou contacte-nos diretamente.');
+      setError('A Inteligência Artificial está a ser configurada ou a chave API está ausente. Pode continuar o agendamento manualmente ou contactar-nos pelo WhatsApp.');
       console.error(e);
     } finally {
       setIsLoading(false);
@@ -78,18 +79,18 @@ export default function RecommendationSection() {
                 <span>Inteligência Artificial</span>
             </div>
           <h2 className="mt-4 text-3xl font-bold tracking-tight sm:text-4xl">
-            Não Sabe Qual Serviço Escolher?
+            Dúvidas sobre o Serviço?
           </h2>
           <p className="mt-4 text-lg text-muted-foreground">
-            Use nossa ferramenta inteligente para obter uma recomendação personalizada para o seu veículo em Cascais.
+            Peça uma sugestão à nossa IA ou fale diretamente connosco em Cascais.
           </p>
         </div>
         <div className="mx-auto grid max-w-6xl gap-8 lg:grid-cols-2">
           <Card>
             <CardHeader>
-              <CardTitle>Receba uma Recomendação</CardTitle>
+              <CardTitle>Recomendação Inteligente</CardTitle>
               <CardDescription>
-                Explique-nos o que o seu carro precisa e a nossa IA ajudará.
+                Explique o estado da pintura e o que deseja alcançar.
               </CardDescription>
             </CardHeader>
             <CardContent>
@@ -103,10 +104,10 @@ export default function RecommendationSection() {
                     name="currentCondition"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>Condição Atual do Veículo</FormLabel>
+                        <FormLabel>Estado Atual</FormLabel>
                         <FormControl>
                           <Textarea
-                            placeholder="Ex: Pintura fosca, com arranhões leves e algumas manchas do sol..."
+                            placeholder="Ex: Pintura sem brilho, com marcas de lavagem e arranhões leves..."
                             {...field}
                             rows={4}
                           />
@@ -120,10 +121,10 @@ export default function RecommendationSection() {
                     name="desiredOutcome"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>Resultado Desejado</FormLabel>
+                        <FormLabel>O que deseja?</FormLabel>
                         <FormControl>
                           <Textarea
-                            placeholder="Ex: Quero restaurar o brilho original e proteger contra o salitre de Cascais..."
+                            placeholder="Ex: Quero um acabamento espelhado e proteção duradoura..."
                             {...field}
                             rows={4}
                           />
@@ -138,7 +139,7 @@ export default function RecommendationSection() {
                     ) : (
                       <Bot className="mr-2 h-4 w-4" />
                     )}
-                    Obter Recomendação Inteligente
+                    Analisar Pedido
                   </Button>
                 </form>
               </Form>
@@ -148,11 +149,11 @@ export default function RecommendationSection() {
             {isLoading && (
               <Card className="flex w-full flex-col items-center justify-center p-8">
                 <Loader2 className="h-12 w-12 animate-spin text-primary" />
-                <p className="mt-4 text-muted-foreground">Analisando o seu pedido...</p>
+                <p className="mt-4 text-muted-foreground">O mestre está a analisar o seu relato...</p>
               </Card>
             )}
             {error && (
-              <div className="w-full">
+              <div className="w-full space-y-4">
                 <Alert variant="destructive">
                   <AlertCircle className="h-4 w-4" />
                   <AlertTitle>IA em Manutenção</AlertTitle>
@@ -160,9 +161,19 @@ export default function RecommendationSection() {
                     {error}
                   </AlertDescription>
                 </Alert>
-                <Button variant="outline" className="mt-4 w-full" onClick={() => setError(null)}>
-                  Tentar Novamente
-                </Button>
+                <div className="grid grid-cols-1 gap-4">
+                  <Button variant="default" className="w-full bg-green-600 hover:bg-green-700" asChild>
+                    <Link href="https://wa.me/351912345678" target="_blank">
+                      <Phone className="mr-2 h-4 w-4" />
+                      Falar pelo WhatsApp
+                    </Link>
+                  </Button>
+                  <Button variant="outline" className="w-full" asChild>
+                    <Link href="/agendar">
+                      Ir para Agendamento Manual
+                    </Link>
+                  </Button>
+                </div>
               </div>
             )}
             {recommendation && (
@@ -170,11 +181,8 @@ export default function RecommendationSection() {
                 <CardHeader>
                   <CardTitle className="flex items-center gap-2">
                     <Sparkles className="h-5 w-5 text-primary" />
-                    Sugestão Brilho na Lata
+                    Sugestão do Especialista
                   </CardTitle>
-                  <CardDescription>
-                    Recomendação personalizada baseada no seu relato.
-                  </CardDescription>
                 </CardHeader>
                 <CardContent className="space-y-4">
                   <h3 className="text-xl font-bold text-primary">
@@ -182,20 +190,23 @@ export default function RecommendationSection() {
                   </h3>
                   <div className="space-y-2 text-sm">
                     <p>
-                      <strong className="text-foreground">O que inclui:</strong><br />
+                      <strong className="text-foreground">Processo:</strong><br />
                       <span className="text-muted-foreground">{recommendation.packageDescription}</span>
                     </p>
                     <p>
-                      <strong className="text-foreground">Por que este serviço?</strong><br />
+                      <strong className="text-foreground">Por que escolhemos este?</strong><br />
                       <span className="text-muted-foreground">{recommendation.reasoning}</span>
                     </p>
                   </div>
                 </CardContent>
-                <CardFooter>
+                <CardFooter className="flex flex-col gap-4">
                     <div className="w-full rounded-lg bg-primary/10 p-4 text-center border border-primary/20">
                         <p className="text-sm font-semibold text-primary">Investimento Estimado</p>
                         <p className="text-2xl font-bold text-primary">{recommendation.estimatedPriceRange}</p>
                     </div>
+                    <Button className="w-full" asChild>
+                      <Link href="/agendar">Reservar Este Serviço</Link>
+                    </Button>
                 </CardFooter>
               </Card>
             )}
@@ -203,7 +214,7 @@ export default function RecommendationSection() {
                 <Card className="flex h-full w-full flex-col items-center justify-center p-8 border-dashed bg-slate-50/50 dark:bg-slate-900/20">
                     <div className="text-center text-muted-foreground">
                         <Bot className="mx-auto h-12 w-12 opacity-20" />
-                        <p className="mt-4 max-w-[200px] text-sm italic">Preencha o formulário para ver a mágica acontecer.</p>
+                        <p className="mt-4 max-w-[200px] text-sm italic">O mestre está pronto para aconselhar sobre a estética do seu carro.</p>
                     </div>
                 </Card>
             )}
