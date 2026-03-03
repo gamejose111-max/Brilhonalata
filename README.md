@@ -2,30 +2,35 @@
 
 Este projeto é um site profissional de estética automotiva em Cascais, construído com Next.js 15 e Firebase.
 
-## Como colocar o site no ar AGORA
+## Como colocar o site no ar (Netlify - Sem Cartão)
 
-### Opção 1: Netlify (Fácil e Grátis)
-Como você está usando o Netlify, preencha as configurações assim:
-1. **Branch to deploy:** `main`
-2. **Base directory:** (deixe em branco)
+Se o Netlify mostrar "No results found" na branch, siga estes passos:
+
+1. **Branch to deploy:** 
+   - Verifique no seu GitHub se a branch se chama `main` ou `master`.
+   - Digite o nome exatamente como está lá. Se já estiver escrito `main` e ele não deixar passar, tente clicar fora do campo ou recarregar a página.
+2. **Base directory:** Deixe vazio.
 3. **Build command:** `npm run build`
 4. **Publish directory:** `.next`
 
-**⚠️ IMPORTANTE:** Vá em "Site settings" > "Environment variables" e adicione a chave `GEMINI_API_KEY` para a recomendação de IA funcionar.
+**⚠️ MUITO IMPORTANTE (IA):**
+Após o deploy, a IA só funcionará se você fizer isso:
+1. Vá em **Site settings** > **Environment variables**.
+2. Clique em **Add a variable** > **Single variable**.
+3. **Key:** `GEMINI_API_KEY`
+4. **Value:** (Cole aqui a sua chave da Google AI Studio).
 
-### Opção 2: Firebase App Hosting (Recomendado)
-1. No Console do Firebase, mude para o plano **Blaze** (fica de graça no início).
+## Outras Opções de Hospedagem
+
+### Opção 1: Vercel (Recomendado se o Netlify falhar)
+1. Crie conta na Vercel com GitHub.
+2. Importe o projeto `brilho-na-lata`.
+3. Ele detecta tudo sozinho. Adicione a `GEMINI_API_KEY` nas "Environment Variables" antes de clicar em Deploy.
+
+### Opção 2: Firebase App Hosting (Requer Plano Blaze/Cartão)
+1. No Console do Firebase, mude para o plano **Blaze**.
 2. Vá em **Build** > **App Hosting** e conecte seu GitHub.
-3. Adicione a variável `GEMINI_API_KEY` nas configurações do App Hosting.
-
-### Opção 3: Vercel (Alternativa Grátis)
-1. Conecte sua conta do GitHub na Vercel.
-2. Importe o repositório `brilho-na-lata`.
-3. Adicione a variável `GEMINI_API_KEY` e clique em Deploy.
-
-## Acessar o Painel ADM
-- Para ver os agendamentos: Acesse `seu-link.com/admin`.
-- Faça o login com o seu e-mail e senha de administrador.
+3. Adicione a variável `GEMINI_API_KEY` nas configurações.
 
 ---
 Desenvolvido para **Brilho na Lata - Cascais, Portugal**. O brilho que o seu carro merece!
