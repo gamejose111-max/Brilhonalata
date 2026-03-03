@@ -4,24 +4,27 @@ Este projeto é um site profissional de estética automotiva em Cascais, constru
 
 ## Como colocar o site no ar AGORA
 
-### Opção 1: Firebase App Hosting (Recomendado)
-Ideal para manter tudo no Google.
-1. No Console do Firebase, clique em **Fazer upgrade do projeto** para o plano **Blaze**.
-   - **Fica de graça?** Sim! Para o volume de acessos inicial, ele ficará na "Cota Gratuita" e você pagará **€ 0,00**. O cartão é apenas para verificação.
-2. Vá em **Build** > **App Hosting** e conecte seu repositório do GitHub.
-3. Adicione a variável `GEMINI_API_KEY` nas configurações do App Hosting para a IA funcionar.
+### Opção 1: Netlify (Fácil e Grátis)
+Como você está usando o Netlify, preencha as configurações assim:
+1. **Branch to deploy:** `main`
+2. **Base directory:** (deixe em branco)
+3. **Build command:** `npm run build`
+4. **Publish directory:** `.next`
 
-### Opção 2: Vercel (100% Grátis sem Cartão)
-Se você não quer inserir dados de pagamento agora:
-1. Crie uma conta em [vercel.com](https://vercel.com) usando seu GitHub.
-2. Clique em **"Add New"** > **"Project"** e importe o repositório `brilho-na-lata`.
-3. Em **Environment Variables**, adicione:
-   - Name: `GEMINI_API_KEY`
-   - Value: Sua chave da API do Google AI Studio.
-4. Clique em **Deploy**.
+**⚠️ IMPORTANTE:** Vá em "Site settings" > "Environment variables" e adicione a chave `GEMINI_API_KEY` para a recomendação de IA funcionar.
+
+### Opção 2: Firebase App Hosting (Recomendado)
+1. No Console do Firebase, mude para o plano **Blaze** (fica de graça no início).
+2. Vá em **Build** > **App Hosting** e conecte seu GitHub.
+3. Adicione a variável `GEMINI_API_KEY` nas configurações do App Hosting.
+
+### Opção 3: Vercel (Alternativa Grátis)
+1. Conecte sua conta do GitHub na Vercel.
+2. Importe o repositório `brilho-na-lata`.
+3. Adicione a variável `GEMINI_API_KEY` e clique em Deploy.
 
 ## Acessar o Painel ADM
-- Para ver os agendamentos: Acesse `seu-link.com/login`.
+- Para ver os agendamentos: Acesse `seu-link.com/admin`.
 - Faça o login com o seu e-mail e senha de administrador.
 
 ---
