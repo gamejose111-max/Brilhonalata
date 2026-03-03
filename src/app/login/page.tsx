@@ -1,5 +1,7 @@
 import { LoginForm } from '@/components/auth/login-form';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Suspense } from 'react';
+import { Loader2 } from 'lucide-react';
 
 export default function LoginPage() {
   return (
@@ -13,7 +15,14 @@ export default function LoginPage() {
             </CardDescription>
           </CardHeader>
           <CardContent>
-            <LoginForm />
+            <Suspense fallback={
+              <div className="flex flex-col items-center justify-center p-8">
+                <Loader2 className="h-8 w-8 animate-spin text-primary" />
+                <p className="mt-4 text-sm text-muted-foreground">A carregar formulário...</p>
+              </div>
+            }>
+              <LoginForm />
+            </Suspense>
           </CardContent>
         </Card>
       </div>
